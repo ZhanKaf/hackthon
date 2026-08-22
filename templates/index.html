@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M.Kafi Alalthaf — Portfolio & Eco-Score</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <a class="brand" href="#home">KAFI<span>.</span></a>
+      <nav class="header__nav main-nav">
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+        <a href="#skills">SKILLS</a>
+        <a class="nav-eco" href="#eco-calculator">ECO-SCORE</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">WEB DEVELOPER · PYTHON PROGRAMMER</p>
+          <h1>M.Kafi<br /><span>Alalthaf</span></h1>
+          <p class="hero-text">
+            Portofolio pribadi yang sekarang juga mencatat aksi kecil untuk
+            mengurangi sampah dan dampak lingkungan.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#eco-calculator">Coba Eco-Score →</a>
+            <a class="btn ghost" href="#skills">Lihat Project</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="orb">🌱</div>
+          <p>MY DIGITAL IMPACT</p>
+          <strong>BUILD · LEARN · RECYCLE</strong>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="section-heading">
+          <span>01</span>
+          <h2>ABOUT ME</h2>
+        </div>
+        <div class="about-grid">
+          <div>
+            <p class="lead">
+              Seorang pembelajar teknologi yang fokus pada Python dan web
+              development, dengan minat pada gaming, bot, dan project yang punya
+              manfaat nyata.
+            </p>
+            <p>
+              Sekarang portofolio ini juga menjadi tempat mencatat aktivitas
+              lingkungan. Jadi project bukan cuma dipamerkan, tetapi bisa
+              menunjukkan dampaknya.
+            </p>
+          </div>
+          <img
+            class="profile-img"
+            src="{{ url_for('static', filename='img/profile.png') }}"
+            alt="M.Kafi Alalthaf"
+          />
+        </div>
+      </section>
+
+      <section class="section skills" id="skills">
+        <div class="section-heading">
+          <span>02</span>
+          <h2>MY SKILLS & PROJECTS</h2>
+        </div>
+        <form action="{{ url_for('index') }}#skills" method="POST">
+          <div class="project-grid">
+            <article class="project-card">
+              <img
+                src="{{ url_for('static', filename='img/python.png') }}"
+                alt="Python"
+              />
+              <div>
+                <span class="tag">PYTHON / FLASK</span>
+                <h3>Energy Efficiency</h3>
+                <p>Project web dengan Python dan Flask.</p>
+              </div>
+              <button type="submit" name="button_python" value="SHOW PROJECT">
+                SHOW PROJECT
+              </button>
+            </article>
+            <article class="project-card">
+              <img
+                src="{{ url_for('static', filename='img/discord.png') }}"
+                alt="Discord Bot"
+              />
+              <div>
+                <span class="tag">BOT</span>
+                <h3>GreenBot</h3>
+                <p>Eksperimen bot untuk aktivitas digital.</p>
+              </div>
+              <button type="submit" name="button_discord" value="SHOW PROJECT">
+                SHOW PROJECT
+              </button>
+            </article>
+            <article class="project-card">
+              <img
+                src="{{ url_for('static', filename='img/html.png') }}"
+                alt="HTML"
+              />
+              <div>
+                <span class="tag">HTML / CSS</span>
+                <h3>Meme Generator</h3>
+                <p>Project web sederhana dengan HTML dan CSS.</p>
+              </div>
+              <button type="submit" name="button_html" value="SHOW PROJECT">
+                SHOW PROJECT
+              </button>
+            </article>
+            <article class="project-card">
+              <img
+                src="{{ url_for('static', filename='img/db.webp') }}"
+                alt="SQLite / Database"
+              />
+              <div>
+                <span class="tag">DATABASE</span>
+                <h3>Web Diary</h3>
+                <p>Project yang belajar konsep penyimpanan data.</p>
+              </div>
+              <button type="submit" name="button_db" value="SHOW PROJECT">
+                SHOW PROJECT
+              </button>
+            </article>
+          </div>
+        </form>
+        {% if button_python or button_discord %}
+        <div class="project-detail">
+          {% if button_python %}<img
+            src="{{ url_for('static', filename='img/python-project.png') }}"
+            alt="Python project"
+          />
+          <div>
+            <h3>Web Penghitung Efisiensi Energy</h3>
+            <a href="https://github.com/ZhanKaf/web.energy" target="_blank"
+              >Buka di GitHub →</a
+            >
+          </div>
+          {% endif %} {% if button_discord %}<img
+            src="{{ url_for('static', filename='img/Discord_Project.png') }}"
+            alt="Discord project"
+          />
+          <div>
+            <h3>GreenBot</h3>
+            <a href="https://github.com/ZhanKaf/grennbot" target="_blank"
+              >Buka di GitHub →</a
+            >
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </section>
+
+      <section class="eco-section" id="eco-calculator">
+        <div class="section-heading">
+          <span>03</span>
+          <h2>ECO-SCORE CALCULATOR</h2>
+        </div>
+        <div class="eco-intro">
+          <p class="lead">
+            Pilih sampah, pilih aktivitas yang kamu lakukan, masukkan beratnya,
+            lalu Python menghitung estimasi dampaknya.
+          </p>
+          <span class="mini-badge">PYTHON + FLASK + SQLITE3</span>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-wrap">
+          {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+
+        <form
+          class="eco-form"
+          action="{{ url_for('index') }}#eco-calculator"
+          method="POST"
+        >
+          <input type="hidden" name="form_type" value="calculator" />
+          <div class="eco-panel">
+            <h3>01 · Pilih sampah</h3>
+            <div class="choice-grid waste-grid">
+              {% for key, item in waste.items() %}
+              <button
+                class="choice {% if selected_waste == key %}selected{% endif %}"
+                type="button"
+                data-waste="{{ key }}"
+                onclick="selectWaste('{{ key }}')"
+              >
+                <span class="choice-icon">{{ item.icon }}</span
+                ><strong>{{ item.name }}</strong
+                ><small>{{ item.example }}</small>
+              </button>
+              {% endfor %}
+            </div>
+            <input
+              type="hidden"
+              name="waste"
+              id="wasteInput"
+              value="{{ selected_waste }}"
+            />
+            <div class="description" id="wasteDescription">
+              {{ waste[selected_waste].desc }}
+            </div>
+          </div>
+
+          <div class="eco-panel">
+            <h3>02 · Aktivitas yang dilakukan</h3>
+            <div class="choice-grid activity-grid">
+              {% for key, item in activities.items() %}
+              <button
+                class="choice activity-choice {% if selected_activity == key %}selected{% endif %}"
+                type="button"
+                data-activity="{{ key }}"
+                onclick="selectActivity('{{ key }}')"
+              >
+                <span class="choice-icon">{{ item.icon }}</span
+                ><strong>{{ item.name }}</strong><small>{{ item.desc }}</small>
+              </button>
+              {% endfor %}
+            </div>
+            <input
+              type="hidden"
+              name="activity"
+              id="activityInput"
+              value="{{ selected_activity }}"
+            />
+          </div>
+
+          <div class="eco-panel amount-panel">
+            <div>
+              <h3>03 · Berapa banyak?</h3>
+              <p>Masukkan perkiraan berat sampah.</p>
+            </div>
+            <label class="amount-input"
+              ><input
+                type="number"
+                min="0.1"
+                step="0.1"
+                name="amount"
+                value="{{ amount }}"
+                required
+              /><span>kg</span></label
+            >
+            <button class="calculate-btn" type="submit">
+              HITUNG ECO-SCORE →
+            </button>
+          </div>
+        </form>
+
+        {% if result %}
+        <div class="result-card">
+          <div class="result-main">
+            <span class="mini-badge">HASIL PERHITUNGAN</span>
+            <h3>{{ result.waste_name }} · {{ result.activity_name }}</h3>
+          </div>
+          <div class="result-stat">
+            <strong>{{ result.score }}</strong><span>ECO-SCORE</span>
+          </div>
+          <div class="result-stat">
+            <strong>{{ '%.2f'|format(result.co2) }}</strong
+            ><span>kg CO₂e avoided</span>
+          </div>
+          <div class="result-stat">
+            <strong>{{ '%.2f'|format(result.trees) }}</strong
+            ><span>tree equivalent</span>
+          </div>
+        </div>
+        {% endif %}
+      </section>
+    </main>
+
+    <footer>
+      <span>© M.Kafi Alalthaf</span>
+    </footer>
+    <script>
+      const wasteData = {{ waste|tojson }};
+      const activityData = {{ activities|tojson }};
+      function selectWaste(key) {
+        document.getElementById('wasteInput').value = key;
+        document.querySelectorAll('[data-waste]').forEach(el => el.classList.toggle('selected', el.dataset.waste === key));
+        document.getElementById('wasteDescription').textContent = wasteData[key].desc;
+        if (key !== 'organic' && document.getElementById('activityInput').value === 'compost') selectActivity('recycle');
+      }
+      function selectActivity(key) {
+        const waste = document.getElementById('wasteInput').value;
+        if (key === 'compost' && waste !== 'organic') return;
+        document.getElementById('activityInput').value = key;
+        document.querySelectorAll('[data-activity]').forEach(el => el.classList.toggle('selected', el.dataset.activity === key));
+      }
+    </script>
+  </body>
+</html>
